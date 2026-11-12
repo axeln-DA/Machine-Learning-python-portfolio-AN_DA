@@ -12,7 +12,6 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 |:---:|---|---|
 | 02 | Python Foundations | [View Python Script](lessons/lesson_02.py) |
 | 03 | Data Analysis with pandas | [View Python Script](lessons/lesson_03_pandas.py) |
-| 04 | Jupyter Notebook Practice | [View Notebook](lessons/lesson_04_notebook.ipynb) |
 | 05 | Classification and Model Evaluation | [View Notebook](lessons/lesson_05_classification.ipynb) |
 | 09 | Imbalanced Classification | [View Notebook](lessons/lesson_09_imbalanced_data.ipynb) |
 | 12 | Machine Learning Pipelines | [View Notebook](lessons/lesson_12_ml_pipelines.ipynb) |

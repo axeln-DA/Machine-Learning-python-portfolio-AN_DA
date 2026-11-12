@@ -28,3 +28,4 @@ secrets.json
 # Local datasets and generated outputs
 data/
 outputs/
+saved_models/
