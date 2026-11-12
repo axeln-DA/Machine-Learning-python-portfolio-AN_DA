@@ -19,6 +19,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 14 | Model Calibration and Probability Reliability | [View Notebook](lessons/lesson_14_model_calibration.ipynb) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
+
 ## Key Findings
 
 | Lesson | Finding |
@@ -62,7 +63,7 @@ Notebooks run top to bottom with fixed random seeds (`random_state=42`). Tested 
 
 ## Tools and Libraries
 
-   Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, joblib, Matplotlib, and Plotly.
+Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, joblib, Matplotlib, and Plotly.
 
 ## Repository Structure
 
