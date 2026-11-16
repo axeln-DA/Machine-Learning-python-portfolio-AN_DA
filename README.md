@@ -17,6 +17,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 12 | Machine Learning Pipelines | [View Notebook](lessons/lesson_12_ml_pipelines.ipynb) |
 | 13 | Model Interpretability and Explainable AI | [View Notebook](lessons/lesson_13_model_interpretability.ipynb) |
 | 14 | Model Calibration and Probability Reliability | [View Notebook](lessons/lesson_14_model_calibration.ipynb) |
+| 15 | Advanced Classifiers: Gradient Boosting and SVM | [View Notebook](lessons/lesson_15_advanced_classifiers.ipynb) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
 
@@ -29,12 +30,17 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 12 | Supervised feature selection (SelectKBest, k = 8) matched the full model in cross-validation (AP 0.72), while PCA to 8 components lost the predictive signal (AP 0.19). |
 | 13 | Logistic Regression achieved the best cross-validated PR-AUC of three models (0.53). SHAP contributions reproduced the model's predicted probability exactly; animal exposure and fever had the largest effects (odds ratios 5.4 and 4.0). |
 | 14 | The model was already well calibrated (ECE 0.044); sigmoid and isotonic recalibration did not improve the Brier score. |
+| 15 | On a real clinical dataset (768 patients), tuned Gradient Boosting, SVMs and Logistic Regression were statistically indistinguishable (test ROC-AUC 0.807–0.825; Gradient Boosting − Logistic Regression +0.013, 95% CI −0.011 to +0.037), and tuning pushed every model toward simplicity. A screening threshold chosen on training data raised test sensitivity from 0.556 to 0.889, cutting missed cases from 24 to 6. |
 
 ## Selected Figures
 
 | SHAP feature importance | Precision–recall comparison | PCA explained variance |
 |:---:|:---:|:---:|
 | ![SHAP feature importance](figures/shap_feature_importance.png) | ![Precision-recall comparison](figures/precision_recall_comparison.png) | ![PCA explained variance](figures/pca_explained_variance.png) |
+
+| Gradient boosting: learning rate vs number of trees | Test ROC-AUC with 95% bootstrap CIs |
+|:---:|:---:|
+| ![Gradient boosting learning curves](figures/lesson15_gb_learning_rate_curves.png) | ![Test ROC-AUC confidence intervals](figures/lesson15_test_auc_confidence_intervals.png) |
 
 ## How to Run
 
@@ -52,8 +58,10 @@ Notebooks run top to bottom with fixed random seeds (`random_state=42`). Tested 
 
 - Python programming, pandas, and data preparation
 - Exploratory data analysis and visualization
-- Classification using Logistic Regression, Random Forest, and Gradient Boosting
+- Classification using Logistic Regression, Random Forest, Gradient Boosting, and Support Vector Machines
 - Cross-validation and hyperparameter tuning
+- Randomized hyperparameter search and early stopping
+- Bootstrap confidence intervals and screening thresholds
 - Confusion matrices, ROC-AUC, and precision-recall evaluation
 - Class imbalance, resampling, and feature selection
 - Principal Component Analysis
@@ -73,7 +81,7 @@ Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn
 
 ## Data and Limitations
 
-Projects use educational datasets, including scikit-learn datasets and synthetically generated data.
+Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes), and synthetically generated data.
 
 Results are intended to demonstrate machine learning methods and analytical reasoning. Synthetic surveillance examples do not constitute validated clinical or operational prediction systems.
 
