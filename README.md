@@ -18,6 +18,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 13 | Model Interpretability and Explainable AI | [View Notebook](lessons/lesson_13_model_interpretability.ipynb) |
 | 14 | Model Calibration and Probability Reliability | [View Notebook](lessons/lesson_14_model_calibration.ipynb) |
 | 15 | Advanced Classifiers: Gradient Boosting and SVM | [View Notebook](lessons/lesson_15_advanced_classifiers.ipynb) |
+| 16 | Regression on Real Data | [View Notebook](lessons/lesson_16_regression.ipynb) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
 
@@ -31,6 +32,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 13 | Logistic Regression achieved the best cross-validated PR-AUC of three models (0.53). SHAP contributions reproduced the model's predicted probability exactly; animal exposure and fever had the largest effects (odds ratios 5.4 and 4.0). |
 | 14 | The model was already well calibrated (ECE 0.044); sigmoid and isotonic recalibration did not improve the Brier score. |
 | 15 | On a real clinical dataset (768 patients), tuned Gradient Boosting, SVMs and Logistic Regression were statistically indistinguishable (test ROC-AUC 0.807–0.825; Gradient Boosting − Logistic Regression +0.013, 95% CI −0.011 to +0.037), and tuning pushed every model toward simplicity. A screening threshold chosen on training data raised test sensitivity from 0.556 to 0.889, cutting missed cases from 24 to 6. |
+| 16 | On 1,460 Ames home sales, three very large homes caused 77.6% of squared error and collapsed one cross-validation fold; applying the dataset author's 4,000 sq ft scope rule raised Lasso R² from 0.636 to 0.931. XGBoost, LightGBM and scikit-learn Gradient Boosting performed almost identically, with XGBoost and LightGBM about 4× faster. Averaging Lasso and LightGBM gave the best test result (MAE $13,749, R² 0.931), though its edge over Lasso alone was not statistically confirmed. |
 
 ## Selected Figures
 
@@ -41,6 +43,10 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | Gradient boosting: learning rate vs number of trees | Test ROC-AUC with 95% bootstrap CIs |
 |:---:|:---:|
 | ![Gradient boosting learning curves](figures/lesson15_gb_learning_rate_curves.png) | ![Test ROC-AUC confidence intervals](figures/lesson15_test_auc_confidence_intervals.png) |
+
+| Outlier diagnosis and model scope | Residual analysis by price band |
+|:---:|:---:|
+| ![Outlier diagnosis](figures/lesson16_outlier_diagnosis.png) | ![Residual analysis](figures/lesson16_residual_analysis.png) |
 
 ## How to Run
 
@@ -54,6 +60,8 @@ pip install -r requirements.txt
 
 Notebooks run top to bottom with fixed random seeds (`random_state=42`). Tested with Python 3.14.
 
+On macOS, XGBoost and LightGBM also need the OpenMP runtime (`libomp`). On Intel Macs, where Homebrew is no longer supported, it can be installed from [mac.r-project.org/openmp](https://mac.r-project.org/openmp/).
+
 ## Areas of Practice
 
 - Python programming, pandas, and data preparation
@@ -62,6 +70,9 @@ Notebooks run top to bottom with fixed random seeds (`random_state=42`). Tested 
 - Cross-validation and hyperparameter tuning
 - Randomized hyperparameter search and early stopping
 - Bootstrap confidence intervals and screening thresholds
+- Regression with regularisation (Ridge, Lasso), residual analysis and outlier diagnosis
+- Mixed-type preprocessing with ColumnTransformer and structural missing values
+- Boosting libraries (AdaBoost, XGBoost, LightGBM) and model ensembling
 - Confusion matrices, ROC-AUC, and precision-recall evaluation
 - Class imbalance, resampling, and feature selection
 - Principal Component Analysis
@@ -71,7 +82,7 @@ Notebooks run top to bottom with fixed random seeds (`random_state=42`). Tested 
 
 ## Tools and Libraries
 
-Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, joblib, Matplotlib, and Plotly.
+Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, XGBoost, LightGBM, joblib, Matplotlib, and Plotly.
 
 ## Repository Structure
 
@@ -81,7 +92,7 @@ Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn
 
 ## Data and Limitations
 
-Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes), and synthetically generated data.
+Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data.
 
 Results are intended to demonstrate machine learning methods and analytical reasoning. Synthetic surveillance examples do not constitute validated clinical or operational prediction systems.
 
