@@ -19,8 +19,15 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 14 | Model Calibration and Probability Reliability | [View Notebook](lessons/lesson_14_model_calibration.ipynb) |
 | 15 | Advanced Classifiers: Gradient Boosting and SVM | [View Notebook](lessons/lesson_15_advanced_classifiers.ipynb) |
 | 16 | Regression on Real Data | [View Notebook](lessons/lesson_16_regression.ipynb) |
+| 17 | Outbreak Surveillance Analytics with OLAP SQL | [View Notebook](lessons/lesson_17_surveillance_olap.ipynb) · [Live Dashboard](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/surveillance_dashboard.html) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
+
+## Featured: Outbreak Surveillance Dashboard
+
+Interactive dashboard built from OLAP SQL queries: KPI cards, the epidemic curve with a 7-day moving average, attack rates, reporting delays and weekly incidence by district. **[Open the live dashboard](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/surveillance_dashboard.html)** (hover for details).
+
+![Outbreak surveillance dashboard](figures/lesson17_surveillance_dashboard.png)
 
 ## Key Findings
 
@@ -33,6 +40,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 14 | The model was already well calibrated (ECE 0.044); sigmoid and isotonic recalibration did not improve the Brier score. |
 | 15 | On a real clinical dataset (768 patients), tuned Gradient Boosting, SVMs and Logistic Regression were statistically indistinguishable (test ROC-AUC 0.807–0.825; Gradient Boosting − Logistic Regression +0.013, 95% CI −0.011 to +0.037), and tuning pushed every model toward simplicity. A screening threshold chosen on training data raised test sensitivity from 0.556 to 0.889, cutting missed cases from 24 to 6. |
 | 16 | On 1,460 Ames home sales, three very large homes caused 77.6% of squared error and collapsed one cross-validation fold; applying the dataset author's 4,000 sq ft scope rule raised Lasso R² from 0.636 to 0.931. XGBoost, LightGBM and scikit-learn Gradient Boosting performed almost identically, with XGBoost and LightGBM about 4× faster. Averaging Lasso and LightGBM gave the best test result (MAE $13,749, R² 0.931), though its edge over Lasso alone was not statistically confirmed. |
+| 17 | A synthetic outbreak line list (6,057 reports) was modelled as a star schema and analysed with OLAP SQL in DuckDB. Data-quality checks removed 90 duplicate reports and flagged 30 impossible dates. A calendar dimension kept zero-case days in 7-day moving averages; reports averaged 92 on Mondays vs 17 on weekends, an artefact the trailing average removes. ROLLUP and CUBE produced district, province and regional attack rates (Eastvale 412 vs 220 per 100,000 regionally), and LAG-based week-over-week growth showed the slowdown before each district's peak. |
 
 ## Selected Figures
 
@@ -73,6 +81,9 @@ On macOS, XGBoost and LightGBM also need the OpenMP runtime (`libomp`). On Intel
 - Regression with regularisation (Ridge, Lasso), residual analysis and outlier diagnosis
 - Mixed-type preprocessing with ColumnTransformer and structural missing values
 - Boosting libraries (AdaBoost, XGBoost, LightGBM) and model ensembling
+- OLAP SQL on a star schema (DuckDB): window functions, ROLLUP/CUBE, QUALIFY deduplication
+- Outbreak surveillance indicators: epidemic curves, 7-day moving averages, attack rates, week-over-week growth and reporting delays
+- Interactive dashboards with Plotly, published with GitHub Pages
 - Confusion matrices, ROC-AUC, and precision-recall evaluation
 - Class imbalance, resampling, and feature selection
 - Principal Component Analysis
@@ -82,7 +93,7 @@ On macOS, XGBoost and LightGBM also need the OpenMP runtime (`libomp`). On Intel
 
 ## Tools and Libraries
 
-Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, XGBoost, LightGBM, joblib, Matplotlib, and Plotly.
+Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn, SHAP, XGBoost, LightGBM, joblib, DuckDB (SQL), Parquet, Matplotlib, and Plotly.
 
 ## Repository Structure
 
@@ -92,7 +103,7 @@ Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn
 
 ## Data and Limitations
 
-Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data.
+Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data, including a fictional outbreak line list.
 
 Results are intended to demonstrate machine learning methods and analytical reasoning. Synthetic surveillance examples do not constitute validated clinical or operational prediction systems.
 
