@@ -21,6 +21,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 16 | Regression on Real Data | [View Notebook](lessons/lesson_16_regression.ipynb) |
 | 17 | Outbreak Surveillance Analytics with OLAP SQL | [View Notebook](lessons/lesson_17_surveillance_olap.ipynb) · [Live Dashboard](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/surveillance_dashboard.html) |
 | 18 | Clustering Health Areas by Epidemic Profile | [View Notebook](lessons/lesson_18_clustering_health_areas.ipynb) · [Interactive Map](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/health_area_clusters.html) |
+| 19 | Forecasting for Surveillance and Emergency Response | [View Notebook](lessons/lesson_19_surveillance_forecasting.ipynb) · [Live Forecast](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/forecast_outlook.html) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
 
@@ -43,6 +44,7 @@ Interactive dashboard built from OLAP SQL queries: KPI cards, the epidemic curve
 | 16 | On 1,460 Ames home sales, three very large homes caused 77.6% of squared error and collapsed one cross-validation fold; applying the dataset author's 4,000 sq ft scope rule raised Lasso R² from 0.636 to 0.931. XGBoost, LightGBM and scikit-learn Gradient Boosting performed almost identically, with XGBoost and LightGBM about 4× faster. Averaging Lasso and LightGBM gave the best test result (MAE $13,749, R² 0.931), though its edge over Lasso alone was not statistically confirmed. |
 | 17 | A synthetic outbreak line list (6,057 reports) was modelled as a star schema and analysed with OLAP SQL in DuckDB. Data-quality checks removed 90 duplicate reports and flagged 30 impossible dates. A calendar dimension kept zero-case days in 7-day moving averages; reports averaged 92 on Mondays vs 17 on weekends, an artefact the trailing average removes. ROLLUP and CUBE produced district, province and regional attack rates (Eastvale 412 vs 220 per 100,000 regionally), and LAG-based week-over-week growth showed the slowdown before each district's peak. |
 | 18 | Sixty health areas were profiled with SQL (attack rate, timing, duration, age, severity, reporting delay) and clustered with K-means. k = 4 was chosen over the silhouette optimum (k = 3) because k = 3 merged operationally different outbreaks. Hierarchical clustering agreed (ARI 0.948), the clusters recovered the hidden patterns (ARI 0.914; 58 of 60 areas) and were stable under resampling (median ARI 0.954). Without using coordinates, the clusters formed geographic rings: early surges 10 km from the town centre, late, more severe waves 40 km out. |
+| 19 | Nowcasting corrected a 55% undercount in the latest week to within 2% of the eventual total. WHO-style thresholds (mean + 2 SD, 2-week alert rule) detected a post-flood outbreak in its first week (1,992 excess cases). In rolling-origin evaluation, a seasonal Poisson model was best in a normal year (37% skill over a naive baseline) but 18% worse than naive during the outbreak, with 95% ranges covering only 76%; an ensemble beat the baseline in both years and had the best weighted interval score in 2025. |
 
 ## Selected Figures
 
@@ -61,6 +63,10 @@ Interactive dashboard built from OLAP SQL queries: KPI cards, the epidemic curve
 | Cluster profiles | Cluster separation and map |
 |:---:|:---:|
 | ![Cluster profiles](figures/lesson18_cluster_profiles.png) | ![Cluster map](figures/lesson18_cluster_map.png) |
+
+| Early warning: 2025 against the epidemic threshold | 4-week forecast with uncertainty |
+|:---:|:---:|
+| ![Early warning](figures/lesson19_early_warning.png) | ![Forecast outlook](figures/lesson19_forecast_outlook.png) |
 
 ## How to Run
 
@@ -91,6 +97,7 @@ On macOS, XGBoost and LightGBM also need the OpenMP runtime (`libomp`). On Intel
 - Outbreak surveillance indicators: epidemic curves, 7-day moving averages, attack rates, week-over-week growth and reporting delays
 - Interactive dashboards with Plotly, published with GitHub Pages
 - Unsupervised learning: K-means, hierarchical clustering, choosing k, PCA, cluster validation and stability
+- Surveillance forecasting: nowcasting reporting delays, epidemic thresholds, rolling-origin evaluation, prediction intervals, weighted interval score and ensembles
 - Confusion matrices, ROC-AUC, and precision-recall evaluation
 - Class imbalance, resampling, and feature selection
 - Principal Component Analysis
@@ -110,7 +117,7 @@ Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn
 
 ## Data and Limitations
 
-Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data, including fictional outbreak line lists.
+Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data, including fictional outbreak line lists and a weekly surveillance series.
 
 Results are intended to demonstrate machine learning methods and analytical reasoning. Synthetic surveillance examples do not constitute validated clinical or operational prediction systems.
 
