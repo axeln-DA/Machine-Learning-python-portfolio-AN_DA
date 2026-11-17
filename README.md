@@ -20,6 +20,7 @@ Projects are organized chronologically in the [`lessons/`](lessons/) directory.
 | 15 | Advanced Classifiers: Gradient Boosting and SVM | [View Notebook](lessons/lesson_15_advanced_classifiers.ipynb) |
 | 16 | Regression on Real Data | [View Notebook](lessons/lesson_16_regression.ipynb) |
 | 17 | Outbreak Surveillance Analytics with OLAP SQL | [View Notebook](lessons/lesson_17_surveillance_olap.ipynb) · [Live Dashboard](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/surveillance_dashboard.html) |
+| 18 | Clustering Health Areas by Epidemic Profile | [View Notebook](lessons/lesson_18_clustering_health_areas.ipynb) · [Interactive Map](https://axeln-da.github.io/Machine-Learning-python-portfolio-AN_DA/health_area_clusters.html) |
 
 *The table lists available, documented lesson files. Lesson numbering follows the original learning sequence.*
 
@@ -41,6 +42,7 @@ Interactive dashboard built from OLAP SQL queries: KPI cards, the epidemic curve
 | 15 | On a real clinical dataset (768 patients), tuned Gradient Boosting, SVMs and Logistic Regression were statistically indistinguishable (test ROC-AUC 0.807–0.825; Gradient Boosting − Logistic Regression +0.013, 95% CI −0.011 to +0.037), and tuning pushed every model toward simplicity. A screening threshold chosen on training data raised test sensitivity from 0.556 to 0.889, cutting missed cases from 24 to 6. |
 | 16 | On 1,460 Ames home sales, three very large homes caused 77.6% of squared error and collapsed one cross-validation fold; applying the dataset author's 4,000 sq ft scope rule raised Lasso R² from 0.636 to 0.931. XGBoost, LightGBM and scikit-learn Gradient Boosting performed almost identically, with XGBoost and LightGBM about 4× faster. Averaging Lasso and LightGBM gave the best test result (MAE $13,749, R² 0.931), though its edge over Lasso alone was not statistically confirmed. |
 | 17 | A synthetic outbreak line list (6,057 reports) was modelled as a star schema and analysed with OLAP SQL in DuckDB. Data-quality checks removed 90 duplicate reports and flagged 30 impossible dates. A calendar dimension kept zero-case days in 7-day moving averages; reports averaged 92 on Mondays vs 17 on weekends, an artefact the trailing average removes. ROLLUP and CUBE produced district, province and regional attack rates (Eastvale 412 vs 220 per 100,000 regionally), and LAG-based week-over-week growth showed the slowdown before each district's peak. |
+| 18 | Sixty health areas were profiled with SQL (attack rate, timing, duration, age, severity, reporting delay) and clustered with K-means. k = 4 was chosen over the silhouette optimum (k = 3) because k = 3 merged operationally different outbreaks. Hierarchical clustering agreed (ARI 0.948), the clusters recovered the hidden patterns (ARI 0.914; 58 of 60 areas) and were stable under resampling (median ARI 0.954). Without using coordinates, the clusters formed geographic rings: early surges 10 km from the town centre, late, more severe waves 40 km out. |
 
 ## Selected Figures
 
@@ -55,6 +57,10 @@ Interactive dashboard built from OLAP SQL queries: KPI cards, the epidemic curve
 | Outlier diagnosis and model scope | Residual analysis by price band |
 |:---:|:---:|
 | ![Outlier diagnosis](figures/lesson16_outlier_diagnosis.png) | ![Residual analysis](figures/lesson16_residual_analysis.png) |
+
+| Cluster profiles | Cluster separation and map |
+|:---:|:---:|
+| ![Cluster profiles](figures/lesson18_cluster_profiles.png) | ![Cluster map](figures/lesson18_cluster_map.png) |
 
 ## How to Run
 
@@ -84,6 +90,7 @@ On macOS, XGBoost and LightGBM also need the OpenMP runtime (`libomp`). On Intel
 - OLAP SQL on a star schema (DuckDB): window functions, ROLLUP/CUBE, QUALIFY deduplication
 - Outbreak surveillance indicators: epidemic curves, 7-day moving averages, attack rates, week-over-week growth and reporting delays
 - Interactive dashboards with Plotly, published with GitHub Pages
+- Unsupervised learning: K-means, hierarchical clustering, choosing k, PCA, cluster validation and stability
 - Confusion matrices, ROC-AUC, and precision-recall evaluation
 - Class imbalance, resampling, and feature selection
 - Principal Component Analysis
@@ -103,7 +110,7 @@ Python, Jupyter Notebook, VS Code, NumPy, pandas, scikit-learn, imbalanced-learn
 
 ## Data and Limitations
 
-Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data, including a fictional outbreak line list.
+Projects use educational datasets, including scikit-learn datasets, a public clinical dataset from OpenML (Pima Indians Diabetes, Ames Housing), and synthetically generated data, including fictional outbreak line lists.
 
 Results are intended to demonstrate machine learning methods and analytical reasoning. Synthetic surveillance examples do not constitute validated clinical or operational prediction systems.
 
